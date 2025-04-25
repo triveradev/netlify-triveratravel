@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TriveraTravel Convention Booking</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(to right, #1c92d2, #f2fcfe);
+      overflow-x: hidden;
+    }
+    .main-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .booking-wrapper {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 740px;
+      width: 100%;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1.2s ease-in-out;
+    }
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      color: #1c92d2;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 16px;
+      color: #333;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    input, select {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    input::placeholder {
+      color: #999;
+    }
+    button {
+      background: #1c92d2;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #1369a8;
+    }
+    .alert-box {
+      display: none;
+      padding: 15px;
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: 6px;
+      margin-top: 20px;
+      font-size: 16px;
+    }
+    .error-message {
+      color: #e74c3c;
+      font-size: 14px;
+      display: none;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+    .footer-note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+    }
+    .header-logo {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      width: 130px;
+    }
+    .inline-logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      width: 140px;
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="https://triveratech.com"><img src="https://triveratech.com/website/client/components/pages/ignite/TriveraLOGO_white.png" alt="TriveraTech Logo" class="header-logo"></a>
+
+  <div class="main-section">
+    <div class="booking-wrapper">
+      <img src="../logo.png" alt="Company Logo" class="inline-logo">
+      <h1>TriveraTravel - Travel Booking</h1>
+      <form id="formBooking" novalidate>
+	    <label for="inputName">Traveler Name</label>
+        <input type="text" id="inputName" name="name" placeholder="Full Name" required />
+        <div class="error-message" id="msgName">Name is required.</div>
+
+        <label for="inputEmail">Business Email</label>
+        <input type="email" id="inputEmail" name="email" placeholder="name@company.com" required />
+        <div class="error-message" id="msgEmail">Please enter a valid business email address.</div>
+		
+        <label for="inputDeparture">Departure Date</label>
+        <input type="date" id="inputDeparture" name="departure" required />
+        <div class="error-message" id="msgDeparture">Please select a valid departure date.</div>
+
+        <label for="inputReturn">Return Date</label>
+        <input type="date" id="inputReturn" name="return" required />
+        <div class="error-message" id="msgReturn">Please select a return date after the departure date.</div>
+
+        <label for="selectFlight">Choose Flight</label>
+        <select id="selectFlight" name="flight" required>
+          <option value="">-- Select a flight --</option>
+          <option value="flight1">Flight 101 - Morning</option>
+          <option value="flight2">Flight 205 - Afternoon</option>
+          <option value="flight3">Flight 320 - Evening</option>
+        </select>
+        <div class="error-message" id="msgFlight">Please select a flight.</div>
+
+        <label for="selectHotel">Select Hotel</label>
+        <select id="selectHotel" name="hotel" required>
+          <option value="">-- Select a hotel --</option>
+          <option value="hotelA">Orlando Grand Convention Hotel</option>
+          <option value="hotelB">Sunshine Suites near Convention Center</option>
+          <option value="hotelC">Comfort Business Inn</option>
+        </select>
+        <div class="error-message" id="msgHotel">Please select a hotel.</div>
+
+        <button type="submit">Confirm Booking</button>
+      </form>
+      <div class="alert-box" id="bookingConfirm">
+        Booking confirmed! A confirmation email has been sent to your address.
+      </div>
+    </div>
+  </div>
+  <div class="footer-note">&copy; 2025 Trivera Technologies, LLC. All rights reserved.</div>
+  <script>
+    const form = document.getElementById('formBooking');
+    const confirmationBox = document.getElementById('bookingConfirm');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      let valid = true;
+      const departure = document.getElementById('inputDeparture');
+      const returnDate = document.getElementById('inputReturn');
+      const flight = document.getElementById('selectFlight');
+      const hotel = document.getElementById('selectHotel');
+      const name = document.getElementById('inputName');
+      const email = document.getElementById('inputEmail');
+
+      document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+
+      if (!departure.value) {
+        document.getElementById('msgDeparture').style.display = 'block';
+        valid = false;
+      }
+
+      if (!returnDate.value || new Date(returnDate.value) <= new Date(departure.value)) {
+        document.getElementById('msgReturn').style.display = 'block';
+        valid = false;
+      }
+
+      if (!flight.value) {
+        document.getElementById('msgFlight').style.display = 'block';
+        valid = false;
+      }
+
+      if (!hotel.value) {
+        document.getElementById('msgHotel').style.display = 'block';
+        valid = false;
+      }
+
+      if (!name.value.trim()) {
+        document.getElementById('msgName').style.display = 'block';
+        valid = false;
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.value || !emailPattern.test(email.value)) {
+        document.getElementById('msgEmail').style.display = 'block';
+        valid = false;
+      }
+
+      if (valid) {
+        confirmationBox.style.display = 'block';
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
